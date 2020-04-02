@@ -1,38 +1,28 @@
-import {Action, applyMiddleware, combineReducers, compose, createStore,} from "redux";
-import thunk, {ThunkMiddleware} from "redux-thunk";
-import {Counter_Reducer, CounterState} from "./Counter_Reducer";
-import {FunFact_Reducer, FunFactState} from "./FunFact_Reducer";
+import {configureStore, Action} from '@reduxjs/toolkit'
+import { ThunkAction } from 'redux-thunk'
+import rootReducer from "./rootReducer";
 
 
-const rootReducer = combineReducers({
-    Counter: Counter_Reducer,
-    FunFact: FunFact_Reducer
+
+export type RootState = ReturnType<typeof rootReducer>
+
+
+const store = configureStore({
+    reducer: rootReducer
 });
 
-interface rootState extends
-    CounterState,
-    FunFactState
-{}
-
-
-
-
-
-export interface DispatchAction extends Action {
-    payload: Partial<rootState>;
+if (process.env.NODE_ENV === 'development' && module.hot) {
+    module.hot.accept('./rootReducer', () => {
+        const newRootReducer = require('./rootReducer').default
+        store.replaceReducer(newRootReducer)
+    })
 }
 
-const middleware = thunk as ThunkMiddleware<rootState, DispatchAction>;
+export type AppDispatch = typeof store.dispatch
 
-const ReduxDevTools =
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__();
+export type AppThunk = ThunkAction<void, RootState, null, Action<string>>
 
-export default createStore(
-    rootReducer,
-    compose(applyMiddleware(middleware),ReduxDevTools)
-);
-
+export default store
 
 
 

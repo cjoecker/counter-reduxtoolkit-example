@@ -1,25 +1,28 @@
-import {Reducer} from "redux";
-import {DispatchAction} from "./store";
-import {CounterActionTypes} from "./Counter_Actions";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export class CounterState {
-    counterNumber: number = 0;
+
+type CurrentDisplayState = {
+    counterNumber: number
 }
 
-export const Counter_Reducer: Reducer<CounterState, DispatchAction> = (state = new CounterState(), action) => {
-    switch (action.type) {
-        case CounterActionTypes.SumCounter:
-            return {
-                ...state,
-                counterNumber: state.counterNumber + 1,
-            };
-        case CounterActionTypes.SubtractCounter:
-            return {
-                ...state,
-                counterNumber: state.counterNumber - 1,
-            };
-        default:
-            return state;
-    }
+let initialState: CurrentDisplayState = {
+    counterNumber: 0,
 };
 
+
+const counterSlice = createSlice({
+    name: 'Counter',
+    initialState: initialState,
+    reducers: {
+        increment(state, action: PayloadAction<number>) {
+            state.counterNumber = state.counterNumber + action.payload
+        },
+        decrement(state, action: PayloadAction<number>) {
+            state.counterNumber = state.counterNumber - action.payload
+        }
+    }
+});
+
+export const {increment, decrement} = counterSlice.actions;
+
+export default counterSlice.reducer

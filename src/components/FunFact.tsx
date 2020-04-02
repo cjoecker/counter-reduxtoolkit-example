@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../services/store";
 import {getFunFact} from "../services/FunFact_Slice";
+import {RootState} from "../services/rootReducer";
 
 function FunFact() {
 

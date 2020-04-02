@@ -1,10 +1,6 @@
 import {configureStore, Action} from '@reduxjs/toolkit'
 import { ThunkAction } from 'redux-thunk'
-import rootReducer from "./rootReducer";
-
-
-
-export type RootState = ReturnType<typeof rootReducer>
+import rootReducer, {RootState} from "./rootReducer";
 
 
 const store = configureStore({

@@ -1,11 +1,11 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 
-type CurrentDisplayState = {
+type CounterState = {
     counterNumber: number
 }
 
-let initialState: CurrentDisplayState = {
+let initialState: CounterState = {
     counterNumber: 0,
 };
 
